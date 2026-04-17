@@ -1,89 +1,112 @@
 import streamlit as st
-import time
 
 st.set_page_config(
-    page_title="Wadhwani Foundation Terminology Dictionary",
+    page_title="Wadhwani Foundation Dictionary",
     layout="centered"
 )
 
-# Logo
-st.image("assets/wf_color.png", width=300)
+# --- LOGO ---
+st.image("assets/wf_color.png", width=280)
 
-# Title
-st.title("Wadhwani Foundation Terminology Dictionary")
-st.caption("Interactive UX Prototype • Ideathon Demo")
+# --- TITLE ---
+st.title("Wadhwani Foundation Dictionary")
+st.caption("Interactive Prototype • Ideathon Demo")
 
+# --- INTRO ---
 st.markdown("""
-This prototype demonstrates a **centralized terminology chatbot** designed to align how
-operating, reporting, and technical terms are understood across the **Wadhwani Foundation**.
+This prototype demonstrates a **centralized dictionary and chatbot experience**
+designed to align how **operating, reporting, and technical terms** are understood
+across the **Wadhwani Foundation**.
+
+The goal is to create a **single source of truth** for terminology used in:
+- KPIs and scorecards  
+- Impact and skilling reports  
+- Dashboards and internal reviews  
 """)
 
 st.divider()
 
-# DEMO NOTICE (VERY CLEAR)
-st.warning("""
-⚠️ **Demonstration Prototype Only**
+# --- CHAT INPUT ---
+user_input = st.text_input("💬 Type anything to interact with the dictionary:")
 
-This is a **UX and concept demo**.
-- Any question typed will return the **same explanatory response**
-- The AI-powered logic is intentionally disabled for stability
-- The purpose is to showcase **experience, value, and feasibility**
+# --- CONSTANT DEMO RESPONSE ---
+if user_input and user_input.strip().lower() != "explain transformations":
+    st.markdown("### 🤖 Dictionary Assistant")
+
+    st.info("""
+### 👋 Welcome!
+
+This is the **Wadhwani Foundation Dictionary** prototype.
+
+#### 🧠 Purpose of this project
+- Create **consistent definitions** for terms used across the Foundation
+- Reduce confusion in reporting, reviews, and dashboards
+- Help teams, leaders, and new joiners **speak the same language**
+
+#### ⚙️ How the full version will work
+- Users ask about a term (e.g. *Enabled*, *Transformations*, *Placements*)
+- The system searches **official Impact-owned documents**
+- It returns a **clear, standardized explanation**
+- Related terms and reporting context are shown
+
+#### 📘 Current scope of information
+The terminology demonstrated in this prototype is based on **Impact documentation**, including:
+- Skilling Metrics & Data Collection Methodology (CY26)
+- Skilling Month-End Report (March 2026)
+
+✅ **This is a demonstration prototype.**  
+✅ Any input currently returns this explanation intentionally.
+
+---
+
+### ⌨️ Demo instruction
+To see a **sample term explanation**, please type exactly:
+
+**Explain Transformations**
 """)
 
-# Chat input
-user_input = st.text_input("💬 Ask anything about WF terms, KPIs, or reports:")
-
-if user_input:
-    with st.spinner("Responding..."):
-        time.sleep(1)
-
-    st.markdown("### 🤖 Assistant")
+# --- TRANSFORMATIONS EXPLANATION ---
+if user_input.strip().lower() == "explain transformations":
+    st.markdown("### 📘 Term Explanation: Transformations")
 
     st.success("""
-### 👋 Welcome to the Wadhwani Foundation Terminology Dictionary
+### ✅ Transformations (Skilling – Impact Definition)
 
-This tool is envisioned as a **single source of truth** for how key terms are defined,
-used, and interpreted across the Foundation.
+**Transformations** refer to learners who have completed the **full structured skilling journey**
+and have demonstrated **minimum viable employability readiness**, based on defined quality and
+assessment standards.
 
----
+#### 🔍 How a learner is classified as Transformed
+A learner is considered **Transformed** only when **all mandatory components** are completed
+and passed:
 
-### 🎯 What this dictionary covers
-- **Operating terms** used by program and delivery teams  
-- **Reporting and KPI terminology** used in Impact reviews and dashboards  
-- **Technical and metric definitions** used in analysis and Power BI  
+1. **Pre/Post Video Assessment**
+   - Minimum score of **3 out of 5**
 
----
+2. **Collaborate Activities**
+   - At least **70% of required reflections passed**
 
-### 📘 Current scope of information (Prototype)
-The terminology framework demonstrated here is based on **Impact-owned documents**, including:
+3. **Full Course MCQ Assessments**
+   - Both **Formative (FA)** and **Summative (SA)** assessments
+   - Minimum **70% score in each**
+
+> Interview Preparation may become part of the criteria once fully integrated.
+
+#### 🎯 What Transformations signal
+- High-confidence employability readiness
+- Completion of the **entire skilling pathway**
+- Strongest quality indicator used by Impact
+
+#### 📊 Reporting & ownership
+- Transformations are tracked via **platform analytics**
+- Criteria are **defined and frozen for CY26**
+- Applicable only to **cohort-based, full-course learners**
+- Used in downstream **placement and impact calculations**
+
+#### 📘 Source
+This definition is based on **Impact-owned documentation**, including:
 - Skilling Metrics & Data Collection Methodology (CY26)
 - Skilling Month-End Reporting (March 2026)
 
-These documents define terms such as:
-- Learner classifications (e.g., Transformed, Enabled, Engaged)
-- Input, Output, and Outcome metrics
-- Placement and attribution concepts
-- Reporting and methodology rules used by Impact teams
-
----
-
-### 🚀 In the full AI-enabled version
-- Users will receive **term-specific answers**
-- Definitions will be pulled directly from **official WF documents**
-- Related terms and usage context will be surfaced automatically
-- Updates will reflect the **latest approved methodologies**
-
----
-
-✅ *This response is intentionally the same for all inputs and is shown for demonstration purposes only.*
-""")
-
-    st.divider()
-
-    st.markdown("#### 🔍 Example questions this tool will support:")
-    st.markdown("""
-- What does *Enabled* vs *Transformed* mean?  
-- How are placements attributed?  
-- Which metrics count as outputs vs outcomes?  
-- How is this term used in Impact reporting?
+✅ *This explanation reflects the current information available from Impact documents.*
 """)
