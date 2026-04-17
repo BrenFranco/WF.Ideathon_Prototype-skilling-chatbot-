@@ -5,46 +5,54 @@ st.set_page_config(
     layout="centered"
 )
 
-# --- LOGO ---
-st.image("assets/wf_color.png", width=260)
-
-# --- TITLE ---
+# =========================
+# TITLE & INTRO
+# =========================
 st.title("Wadhwani Foundation Dictionary")
 st.caption("Interactive Prototype • Ideathon Demo")
 
 st.markdown("""
 A centralized dictionary designed to align how **operating, reporting, and technical terms**
 are defined and understood across the **Wadhwani Foundation**.
+
+This prototype demonstrates the **experience and value** of a shared terminology system
+used across Impact, Skilling, and reporting teams.
 """)
 
-# --- TABS ---
+# =========================
+# TABS
+# =========================
 tab1, tab2 = st.tabs(["💬 Dictionary Demo", "📘 Terminology Summary"])
 
 # =========================
-# TAB 1 — CHAT DEMO
+# TAB 1 — DICTIONARY DEMO
 # =========================
 with tab1:
     st.divider()
 
     st.markdown("""
-    **How to use this demo**
-    - Type *anything* to understand what this project does
-    - For the guided demo, type one of the following **exactly**:
-      - **Explain Transformations**
-      - **Explain Enabled**
-      - **Explain Engaged**
-      - **Explain Placements**
-    """)
+### How to use this demo
+- Type **anything** to see what this project does
+- For the guided demo, type **exactly one** of the following:
+  - **Explain Transformations**
+  - **Explain Enabled**
+  - **Explain Engaged**
+  - **Explain Placements**
+""")
 
     user_input = st.text_input("💬 Type here:")
 
-    # ---------- CONSTANT DEMO RESPONSE ----------
-    if user_input and user_input.strip().lower() not in [
+    demo_terms = [
         "explain transformations",
         "explain enabled",
         "explain engaged",
         "explain placements",
-    ]:
+    ]
+
+    # -------------------------
+    # DEFAULT DEMO RESPONSE
+    # -------------------------
+    if user_input and user_input.strip().lower() not in demo_terms:
         st.info("""
 ### 🤖 Dictionary Assistant (Demo Response)
 
@@ -59,7 +67,7 @@ reducing ambiguity in:
 
 #### ⚙️ How the full version will work
 - Users ask about a specific term
-- The system retrieves definitions from **official Impact documents**
+- The system retrieves definitions from **official Impact-owned documents**
 - Clear explanations, context, and related terms are returned
 
 #### 📘 Current scope
@@ -71,7 +79,9 @@ The terminology demonstrated here is based on **Impact-owned Skilling documentat
 ✅ All non-demo inputs intentionally return this explanation.
 """)
 
-    # ---------- TRANSFORMATIONS ----------
+    # -------------------------
+    # TRANSFORMATIONS
+    # -------------------------
     if user_input.strip().lower() == "explain transformations":
         st.success("""
 ### 📌 Transformations
@@ -93,7 +103,9 @@ All mandatory components must be completed and passed:
 **Source:** Impact – Skilling Methodology (CY26), March 2026 Reporting
 """)
 
-    # ---------- ENABLED ----------
+    # -------------------------
+    # ENABLED
+    # -------------------------
     if user_input.strip().lower() == "explain enabled":
         st.success("""
 ### 📌 Enabled
@@ -112,7 +124,9 @@ but have not completed full transformation requirements.
 **Source:** Impact – Skilling Methodology (CY26)
 """)
 
-    # ---------- ENGAGED ----------
+    # -------------------------
+    # ENGAGED
+    # -------------------------
     if user_input.strip().lower() == "explain engaged":
         st.success("""
 ### 📌 Engaged
@@ -130,7 +144,9 @@ have not yet reached enablement thresholds.
 **Source:** Impact – Skilling Methodology (CY26)
 """)
 
-    # ---------- PLACEMENTS ----------
+    # -------------------------
+    # PLACEMENTS
+    # -------------------------
     if user_input.strip().lower() == "explain placements":
         st.success("""
 ### 📌 Placements
