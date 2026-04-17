@@ -6,107 +6,179 @@ st.set_page_config(
 )
 
 # --- LOGO ---
-st.image("assets/wf_color.png", width=280)
+st.image("assets/wf_color.png", width=260)
 
 # --- TITLE ---
 st.title("Wadhwani Foundation Dictionary")
 st.caption("Interactive Prototype • Ideathon Demo")
 
-# --- INTRO ---
 st.markdown("""
-This prototype demonstrates a **centralized dictionary and chatbot experience**
-designed to align how **operating, reporting, and technical terms** are understood
-across the **Wadhwani Foundation**.
-
-The goal is to create a **single source of truth** for terminology used in:
-- KPIs and scorecards  
-- Impact and skilling reports  
-- Dashboards and internal reviews  
+A centralized dictionary designed to align how **operating, reporting, and technical terms**
+are defined and understood across the **Wadhwani Foundation**.
 """)
 
-st.divider()
+# --- TABS ---
+tab1, tab2 = st.tabs(["💬 Dictionary Demo", "📘 Terminology Summary"])
 
-# --- CHAT INPUT ---
-user_input = st.text_input("💬 Type anything to interact with the dictionary:")
+# =========================
+# TAB 1 — CHAT DEMO
+# =========================
+with tab1:
+    st.divider()
 
-# --- CONSTANT DEMO RESPONSE ---
-if user_input and user_input.strip().lower() != "explain transformations":
-    st.markdown("### 🤖 Dictionary Assistant")
+    st.markdown("""
+    **How to use this demo**
+    - Type *anything* to understand what this project does
+    - For the guided demo, type one of the following **exactly**:
+      - **Explain Transformations**
+      - **Explain Enabled**
+      - **Explain Engaged**
+      - **Explain Placements**
+    """)
 
-    st.info("""
-### 👋 Welcome!
+    user_input = st.text_input("💬 Type here:")
 
-This is the **Wadhwani Foundation Dictionary** prototype.
+    # ---------- CONSTANT DEMO RESPONSE ----------
+    if user_input and user_input.strip().lower() not in [
+        "explain transformations",
+        "explain enabled",
+        "explain engaged",
+        "explain placements",
+    ]:
+        st.info("""
+### 🤖 Dictionary Assistant (Demo Response)
 
-#### 🧠 Purpose of this project
-- Create **consistent definitions** for terms used across the Foundation
-- Reduce confusion in reporting, reviews, and dashboards
-- Help teams, leaders, and new joiners **speak the same language**
+Welcome to the **Wadhwani Foundation Dictionary**.
+
+#### 🎯 Purpose
+This initiative creates a **single source of truth** for terminology used across the Foundation,
+reducing ambiguity in:
+- KPIs and scorecards
+- Impact and skilling reports
+- Dashboards and leadership reviews
 
 #### ⚙️ How the full version will work
-- Users ask about a term (e.g. *Enabled*, *Transformations*, *Placements*)
-- The system searches **official Impact-owned documents**
-- It returns a **clear, standardized explanation**
-- Related terms and reporting context are shown
+- Users ask about a specific term
+- The system retrieves definitions from **official Impact documents**
+- Clear explanations, context, and related terms are returned
 
-#### 📘 Current scope of information
-The terminology demonstrated in this prototype is based on **Impact documentation**, including:
+#### 📘 Current scope
+The terminology demonstrated here is based on **Impact-owned Skilling documentation**, including:
 - Skilling Metrics & Data Collection Methodology (CY26)
 - Skilling Month-End Report (March 2026)
 
-✅ **This is a demonstration prototype.**  
-✅ Any input currently returns this explanation intentionally.
-
----
-
-### ⌨️ Demo instruction
-To see a **sample term explanation**, please type exactly:
-
-**Explain Transformations**
+✅ **This is a prototype for demonstration purposes.**  
+✅ All non-demo inputs intentionally return this explanation.
 """)
 
-# --- TRANSFORMATIONS EXPLANATION ---
-if user_input.strip().lower() == "explain transformations":
-    st.markdown("### 📘 Term Explanation: Transformations")
+    # ---------- TRANSFORMATIONS ----------
+    if user_input.strip().lower() == "explain transformations":
+        st.success("""
+### 📌 Transformations
 
-    st.success("""
-### ✅ Transformations (Skilling – Impact Definition)
+**Transformations** represent learners who have completed the **full structured skilling journey**
+and met defined quality and assessment standards, indicating **high-confidence employability readiness**.
 
-**Transformations** refer to learners who have completed the **full structured skilling journey**
-and have demonstrated **minimum viable employability readiness**, based on defined quality and
-assessment standards.
+#### Criteria
+All mandatory components must be completed and passed:
+- Pre/Post Video: ≥ 3/5
+- Collaborate reflections: ≥ 70% passed
+- Full Course MCQs (FA & SA): ≥ 70% in each
 
-#### 🔍 How a learner is classified as Transformed
-A learner is considered **Transformed** only when **all mandatory components** are completed
-and passed:
+#### What it signals
+- Highest quality learning outcome
+- Strongest indicator used by Impact
+- Input to downstream placement and impact calculations
 
-1. **Pre/Post Video Assessment**
-   - Minimum score of **3 out of 5**
-
-2. **Collaborate Activities**
-   - At least **70% of required reflections passed**
-
-3. **Full Course MCQ Assessments**
-   - Both **Formative (FA)** and **Summative (SA)** assessments
-   - Minimum **70% score in each**
-
-> Interview Preparation may become part of the criteria once fully integrated.
-
-#### 🎯 What Transformations signal
-- High-confidence employability readiness
-- Completion of the **entire skilling pathway**
-- Strongest quality indicator used by Impact
-
-#### 📊 Reporting & ownership
-- Transformations are tracked via **platform analytics**
-- Criteria are **defined and frozen for CY26**
-- Applicable only to **cohort-based, full-course learners**
-- Used in downstream **placement and impact calculations**
-
-#### 📘 Source
-This definition is based on **Impact-owned documentation**, including:
-- Skilling Metrics & Data Collection Methodology (CY26)
-- Skilling Month-End Reporting (March 2026)
-
-✅ *This explanation reflects the current information available from Impact documents.*
+**Source:** Impact – Skilling Methodology (CY26), March 2026 Reporting
 """)
+
+    # ---------- ENABLED ----------
+    if user_input.strip().lower() == "explain enabled":
+        st.success("""
+### 📌 Enabled
+
+**Enabled learners** are those who demonstrate **meaningful capability building**
+but have not completed full transformation requirements.
+
+#### Criteria
+- Score ≥ 50 points across defined learning components
+- Does not require completion of the full transformation checklist
+
+#### What it signals
+- Strong engagement and skill exposure
+- Primary pool for placement enablement and follow-on support
+
+**Source:** Impact – Skilling Methodology (CY26)
+""")
+
+    # ---------- ENGAGED ----------
+    if user_input.strip().lower() == "explain engaged":
+        st.success("""
+### 📌 Engaged
+
+**Engaged learners** show active participation beyond registration but
+have not yet reached enablement thresholds.
+
+#### Criteria
+- Score between 30–49 points across learning components
+
+#### What it signals
+- Early-stage engagement
+- Key cohort for nudges and activation strategies
+
+**Source:** Impact – Skilling Methodology (CY26)
+""")
+
+    # ---------- PLACEMENTS ----------
+    if user_input.strip().lower() == "explain placements":
+        st.success("""
+### 📌 Placements
+
+**Placements** refer to learners securing employment after skilling participation,
+tracked across multiple pathways.
+
+#### Key concepts
+- Tracked after defined eligibility windows
+- Includes total placements and attributable incremental placements
+- Used to measure outcome-level impact
+
+#### Reporting ownership
+- Validated through surveys and attribution logic
+- Governed by Impact-defined methodologies
+
+**Source:** Impact – Skilling Month-End Report (March 2026)
+""")
+
+# =========================
+# TAB 2 — TERMINOLOGY SUMMARY
+# =========================
+with tab2:
+    st.divider()
+
+    st.markdown("""
+### 📘 Terminology Summary (Current Scope)
+
+This dictionary currently covers **Impact-owned Skilling terminology**, including:
+
+#### Learner Classifications
+- **Transformations** – Full journey completion with high employability readiness  
+- **Enabled** – Meaningful capability building without full transformation  
+- **Engaged** – Active participation below enablement threshold  
+
+#### Metric Types
+- **Inputs** – Enrolments and participation signals  
+- **Outputs** – Enabled and Transformed learners  
+- **Outcomes** – Placements and incremental impact  
+
+#### Governance
+- Definitions are **centrally defined by Impact**
+- Methodologies are **frozen for CY26**
+- Reporting aligns to **monthly and YTD reviews**
+
+✅ This prototype demonstrates how these terms can be accessed
+through a **single, consistent interface**.
+
+🚀 Future versions will expand coverage across programs and regions.
+""")
+``
