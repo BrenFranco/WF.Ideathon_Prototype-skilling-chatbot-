@@ -1,4 +1,62 @@
 import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader
-...
-``
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import FAISS
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain.chains import RetrievalQA
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+st.set_page_config(page_title="Skilling Metrics Assistant", layout="wide")
+
+st.title("📊 Skilling Metrics & Reporting Assistant")
+st.caption("Answers are strictly based on Skilling Methodology (CY26) and March 2026 Report")
+
+with st.sidebar:
+    st.header("About this prototype")
+    st.write("""
+    This chatbot explains Skilling metrics and reporting logic.
+    It is grounded ONLY in:
+    - Skilling Metrics & Methodology (CY26)
+    - Skilling Month-End Report (March 2026)
+    """)
+
+@st.cache_resource
+def load_data():
+    docs = []
+    paths = [
+        "data/Skilling - Metrics and Data Collection Methodology CY26 - updated.pdf",
+        "data/Skilling Month-End Report - March 2026.pdf"
+    ]
+    for path in paths:
+        loader = PyPDFLoader(path)
+        docs.extend(loader.load())
+
+    splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
+    chunks = splitter.split_documents(docs)
+
+    embeddings = OpenAIEmbeddings()
+    return FAISS.from_documents(chunks, embeddings)
+
+vectorstore = load_data()
+
+llm = ChatOpenAI(temperature=0)
+
+qa = RetrievalQA.from_chain_type(
+    llm=llm,
+    retriever=vectorstore.as_retriever(),
+    return_source_documents=True
+)
+
+query = st.text_input("Ask a question about Skilling metrics:")
+
+if query:
+    result = qa(query)
+    st.subheader("Answer")
+    st.write(result["result"])
+
+    st.subheader("Sources")
+    for doc in result["source_documents"]:
+        st.write(os.path.basename(doc.metadata["source"]))
