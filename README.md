@@ -1,1 +1,1 @@
-# WF.Ideathon_Prototype-skilling-chatbot-
+# WF.Ideathon_Prototype-WFDictionay-chatbot-
