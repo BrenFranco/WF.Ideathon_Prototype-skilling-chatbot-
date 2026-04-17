@@ -3,7 +3,8 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain.chains import RetrievalQA
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
 import os
 
@@ -44,19 +45,23 @@ vectorstore = load_data()
 
 llm = ChatOpenAI(temperature=0)
 
-qa = RetrievalQA.from_chain_type(
-    llm=llm,
-    retriever=vectorstore.as_retriever(),
-    return_source_documents=True
+retriever = vectorstore.as_retriever()
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a Skilling metrics assistant. Answer ONLY using the provided context. If the answer is not in the documents, say 'Not specified in source documents.'"),
+    ("human", "{question}")
+])
+
+chain = (
+    {"context": retriever, "question": lambda x: x}
+    | prompt
+    | llm
+    | StrOutputParser()
 )
 
 query = st.text_input("Ask a question about Skilling metrics:")
 
 if query:
-    result = qa(query)
     st.subheader("Answer")
-    st.write(result["result"])
-
-    st.subheader("Sources")
-    for doc in result["source_documents"]:
-        st.write(os.path.basename(doc.metadata["source"]))
+    response = chain.invoke(query)
+    st.write(response)
